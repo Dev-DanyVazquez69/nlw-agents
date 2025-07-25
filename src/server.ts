@@ -7,6 +7,7 @@ import {
 import { fastifyCors } from "@fastify/cors";
 import { env } from "../env.ts";
 import { sql } from "./db/conection.ts";
+import { getRoomsRoute } from "./http/routes/get-rooms.ts";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -21,6 +22,8 @@ app.setValidatorCompiler(validatorCompiler);
 app.get("/health", async () => {
     return { message: "Hello World!" };
 });
+
+app.register(getRoomsRoute)
 
 app.listen({ port: env.PORT }).then(() => {
     console.log(`Server is running on http://localhost:${env.PORT}`);
